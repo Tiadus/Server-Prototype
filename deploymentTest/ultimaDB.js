@@ -27,7 +27,7 @@ async function deployDatabase() {
     try {
         const db = new dbManager();
         mySQLServer = await db.getMySQLServer();
-        await createDatabase(mySQLServer);
+        await createDatabase(mySQLServer, db.database);
         mySQLServer.end();
         mySQLServer = null;
 

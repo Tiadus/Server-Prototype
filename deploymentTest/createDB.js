@@ -2,10 +2,10 @@ const mysql = require('mysql2');
 const fs = require('fs').promises;
 
 // Connect to the MySQL server and execute the SQL code
-async function createDatabase(mySQLServer) {
+async function createDatabase(mySQLServer, databaseName) {
     try {
         // SQL code to create the database
-        const createDatabaseSql = 'CREATE DATABASE IF NOT EXISTS FOOD4U';
+        const createDatabaseSql = `CREATE DATABASE ${databaseName}`;
 
         // Connect to the MySQL server
         await mySQLServer.promise().connect();
