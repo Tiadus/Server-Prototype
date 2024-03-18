@@ -42,6 +42,9 @@ class Customer {
             if (databaseConnection !== null) {
                 databaseConnection.rollback();
             }
+            if (dbError.code === 'ER_DUP_ENTRY') {
+                throw 409;
+            }
             throw 500;
         } finally {
             if (databaseConnection !== null) {
@@ -527,7 +530,7 @@ class Customer {
                         const orderDate = dateInfo.join("-");
 
                         Order.createOrder(database, cartCode, this.customerCode, recipientName, recipientPhone, orderCode, restaurantCode, orderLocation, orderDate, orderCost)
-                        .then(() => {resolve();})
+                        .then(() => {resolve(orderCode);})
                         .catch(errorCode => {
                             return reject(errorCode);
                         })

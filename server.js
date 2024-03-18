@@ -612,8 +612,7 @@ app.post('/api/customer/cart/delete', (req,res) => {
         const customerDeleteCartPromise = aCustomer.customerDeleteCart(database);
         customerDeleteCartPromise
         .then(result => {
-            console.log("Operation Delete Cart Completed!");
-            res.send("Operation Delete Cart Completed!");
+            res.status(200).send({ message: 'Payment Method Successfully Deleted!' });
         })
         .catch(errorCode => {
             const error = errorIdentify(errorCode);
@@ -655,8 +654,8 @@ app.post('/api/customer/order/create', (req, res) => {
         const authenticatedCustomer = result[0];
         const aCustomer = new Customer(authenticatedCustomer.customerCode, authenticatedCustomer.customerEmail, authenticatedCustomer.customerName, authenticatedCustomer.membershipEnd);
         aCustomer.createCustomerOrder(database, recipientName, recipientPhone, orderLocation, parseFloat(orderCost))
-        .then(() => {
-            res.status(200).send({ message: 'Order created successfully' });
+        .then((orderCode) => {
+            res.json({orderCode: orderCode})
         })
         .catch(errorCode => {
             const error = errorIdentify(errorCode);
